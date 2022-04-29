@@ -1,0 +1,142 @@
+<%- include('partials/_header.ejs') %>
+<section class="row" style="width: 100vw;">
+    <div class="col-md-4" style="background-image: linear-gradient(to bottom right, #caebf2, #ff3b3f); height: 100vh;">
+        <p class="display-4 text-center m-3 p-2" style="color: #3b3a3a;">
+            Hey Doctors! We are here to help. 
+        </p>
+        <p class="h5 m-3 pt-5 text-white" style="text-align: center;">
+            Around the world, doctors have been facing problems. <br><br>Big problems,<br> problems like mental health problems and low social acceptance. <br><br>These are the doctors who have always been there for us even during Covid-19 Pandemic <br><br>Now, we are there for them.
+        </p>
+    </div>
+    <div class="col-md-8" style="background-color: #efefef">
+        <p class="display-4" style="padding-top: 10%; padding-left: 5%; color: #a9a9a9">
+            Sign-Up
+        </p>
+        <form style='padding: 4%; padding-top: 0%' method="POST">
+            <div id="page-1">
+                <div class="mb-2 row">
+                    <label for="typeAccount" class="form-label">Which type of account suits you best ?</label>
+                    <div class="form-check col-md-4">
+                        <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc1" value=1 checked>
+                        <label class="form-check-label" for="typeAcc1">
+                        Doctor
+                        </label>
+                    </div>
+                    <div class="form-check col-md-4">
+                        <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc2" value=2>
+                        <label class="form-check-label" for="typeAcc2">
+                        Doctor's family member
+                        </label>
+                    </div>
+                    <div class="form-check col-md-4">
+                        <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc3" value=3>
+                        <label class="form-check-label" for="typeAcc3">
+                        Patient
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-md-6">
+                        <label for="InputFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="InputFirstName" name="firstName" aria-describedby="FirstNameHelp" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="InputLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="InputLastName" name="lastName" aria-describedby="LastNameHelp" required>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-md-6">
+                        <label for="InputEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="InputEmail" name="email" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="InputPhoneNumber" class="form-label">Phone Number</label>
+                        <input type="number" class="form-control" id="InputPhoneNumber" name="phoneNo" aria-describedby="PhoneNumberHelp" required>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-md-6">
+                        <label for="InputPassword" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="InputPassword" name="password" aria-describedby="PasswordHelp" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="InputPasswordRepeat" class="form-label">Repeat Password</label>
+                        <input type="password" class="form-control" id="InputPasswordRepeat" aria-describedby="PasswordRepeatHelp" required>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="InputAddress" class="form-label">Address</label>
+                    <input type="address" class="form-control" id="InputAddress" name="address" aria-describedby="AddressHelp" required>
+                </div>
+                <div class="form-text">Already have an account? <a href="/login">SignIn</a></div>
+                <button type="button" class="btn btn-primary px-5 mt-2" onclick="change()">Next</button>
+            </div>
+            <div id="page-2" style="display: none;">
+                <div class="mb-2">
+                    <label for="InputHealth" class="form-label">How do you feel ? Tell us about your health:</label>
+                    <textarea class="form-control" id="InputHealth" name="healthInfo" aria-describedby="HealthHelp" rows="5" required>I am feeling great !</textarea>
+                </div>
+                <div class="mb-2 row">
+                    <label for="typeAccount" class="form-label">Do you have Covid-19 ?</label>
+                    <div class="form-check col-md-6">
+                        <input class="form-check-input" type="radio" name="covidStat" id="covidStat1" value=true>
+                        <label class="form-check-label" for="covidStat2">
+                        Yes, I am Positive
+                        </label>
+                    </div>
+                    <div class="form-check col-md-6">
+                        <input class="form-check-input" type="radio" name="covidStat" id="covidStat2" value=false checked>
+                        <label class="form-check-label" for="covidStat2">
+                            No, I am Negative
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-2" id="related-doc" style="display: none;">
+                    <label for="InputRelatedDoc" class="form-label">Which Doctor is related to you ? </label>
+                    <br>
+                    <select name="InputRelatedDoc" id="InputRelatedDoc" class="form-control">
+                        <% doctorsList.forEach(function(doctor) { %>
+                        <option value="<%= doctor._id %>"><%= doctor.name %></option>
+                        <% });%>
+                    </select>
+                </div>
+                <div class="mb-2 row" id="free-time" style="display: none;">
+                    <label class="form-label">When are you free, please tell us so that we may connect you with other doctors: </label>
+                    <div class="col-md-6">
+                        <label for="InputStartFreeTime" class="form-label">Start of free time</label>
+                        <input type="time" class="form-control" id="InputStartFreeTime" name="InputStartFreeTime">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="InputEndFreeTime" class="form-label">End of free time</label>
+                        <input type="time" class="form-control" id="InputEndFreeTime" name="InputEndFreeTime">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary px-5">Sign-Up</button>
+            </div>
+        </form>
+    </div>
+</section>
+<script>
+    function change(){
+        if(document.getElementById("InputFirstName").value == "" || document.getElementById("InputLastName").value == "" || document.getElementById('InputEmail').value == "" || document.getElementById("InputPhoneNumber").value == "" || document.getElementById("InputPassword").value == "" || document.getElementById("InputPasswordRepeat").value == "" || document.getElementById("InputAddress").value == ""){
+            confirm("Please fill all the fields");
+        }else if(document.getElementById("InputPassword").value != document.getElementById("InputPasswordRepeat").value){
+            confirm("Password added in repeat password box does not match with the password in password box.")
+        }else if(!(document.getElementById("InputEmail").value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/))){
+            confirm("Email entered is not in email format, please enter a valid email id.")
+        }else if(document.getElementById('InputPhoneNumber').value > 9999999999 || document.getElementById('InputPhoneNumber').value < 1000000000){
+            confirm("Phone Number Enetered doesn't have 10 digits, please correct this. ")
+        }else{
+            var typeAccount = document.querySelector('input[name="typeAcc"]:checked').value;
+            if (typeAccount == 1){
+                document.getElementById('free-time').style.display = "block";
+            }else if(typeAccount == 2){
+                document.getElementById('related-doc').style.display = "block";
+            }else{}
+            document.getElementById("page-1").style.display = "none";
+            document.getElementById("page-2").style.display = "block";
+        }
+    }
+</script>
+<%- include('partials/_footer.ejs') %>

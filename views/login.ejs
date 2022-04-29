@@ -1,0 +1,51 @@
+<%- include('partials/_header.ejs') %>
+<section class="row" style="width: 100vw;">
+    <div class="col-md-4" style="background-image: linear-gradient(to bottom right, #caebf2, #ff3b3f); height: 100vh;">
+        <p class="display-4 text-center m-3 p-2" style="color: #3b3a3a;">
+            Hey Doctors! We are here to help. 
+        </p>
+        <p class="h5 m-3 pt-5 text-white" style="text-align: center;">
+            Around the world, doctors have been facing problems. <br><br>Big problems,<br> problems like mental health problems and low social acceptance. <br><br>These are the doctors who have always been there for us even during Covid-19 Pandemic <br><br>Now, we are there for them.
+        </p>
+    </div>
+    <div class="col-md-8" style="background-color: #efefef">
+        <p class="display-4" style="padding-top: 10%; padding-left: 5%; color: #a9a9a9">
+            Sign-In
+        </p>
+        <form style='padding: 5%' method="POST">
+            <div class="mb-3 row">
+                <label for="typeAccount" class="form-label">Which type of account do you have ?</label>
+                <div class="form-check col-md-4">
+                    <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc1" value=1 checked>
+                    <label class="form-check-label" for="typeAcc1">
+                    Doctor
+                    </label>
+                </div>
+                <div class="form-check col-md-4">
+                    <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc2" value=2>
+                    <label class="form-check-label" for="typeAcc2">
+                    Doctor's family member
+                    </label>
+                </div>
+                <div class="form-check col-md-4">
+                    <input class="form-check-input" type="radio" name="typeAcc" id="typeAcc3" value=3>
+                    <label class="form-check-label" for="typeAcc3">
+                    Patient
+                    </label>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" required>
+                <div id="emailHelp" class="form-text">Enter the email you registered with</div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" name="password" required>
+            </div>
+            <div class="form-text">Dont't have an account? <a href="/signUp">SignUp</a></div>
+            <button type="submit" class="btn btn-primary px-5 mt-2">LogIn</button>
+        </form>
+    </div>
+</section>
+<%- include('partials/_footer.ejs') %>
