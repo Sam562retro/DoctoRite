@@ -9,7 +9,7 @@
         </div>
     <%}%>
     <p class="h2" style="color: #ff3b3f">Your family member's status: </p>
-    <% if(family.length == 1){ %>
+    <% if((family.length == 0 && data.typeAcc == 1) || (family.length == 1 && data.typeAcc == 2)){ %>
         <p class="h5" style="color: #a9a9a9">There is none related to you who has joined our platform. </p>
     <% }else{ %>
         <div class="row row-cols-1 row-cols-md-3 g-12"></div>
