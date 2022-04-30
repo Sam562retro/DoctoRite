@@ -470,4 +470,8 @@ router.post('/edit-profile', (req, res) => {
     }
 })
 
+router.get('/chat/:roomType', (req, res) => {
+    res.render('chat');
+})
+
 module.exports = router;
