@@ -1,7 +1,7 @@
 <div class="m-0 p-0" style="background-color: #caebf2; height: 100vh;">
-    <div class="m-0 p-0 pt-3 text-center" style="background-color: #0d6efd; height: 25vh;">
+    <div class="m-0 p-0 pt-3 text-center" style="background-color: #ff3b3f; height: 25vh;">
         <p class="h4" style="color: white;">Welcome</p>
-        <a href="#" class="h1" style="text-decoration: none; color: #efefef;">Soham Gupta</a>
+        <a href="/profile/<%= data.typeAcc %>/<%= data._id %>" class="h1" style="text-decoration: none; color: #efefef;"><%= data.name %></a>
     </div>
     <style>
         .buttonDashboard:hover{
@@ -30,13 +30,20 @@
         }
     </style>
     <div class="m-0 p-0 text-center" style="height: 60vh">
-        <button class="m-0 p-0 h4 buttonDashboard button1">Home</button>
-        <button class="m-0 p-0 h4 buttonDashboard button2">Family Status</button>
-        <button class="m-0 p-0 h4 buttonDashboard button1">Patients</button>
-        <button class="m-0 p-0 h4 buttonDashboard button2">Ask Help</button>
+        <button class="m-0 p-0 h4 buttonDashboard button1" onclick="location.href='http://localhost:3000/'">Home</button>
+        <% if(data.typeAcc == '1' || data.typeAcc == '2'){ %>
+            <button class="m-0 p-0 h4 buttonDashboard button2">Family Status</button>
+        <% } %>
+        <% if(data.typeAcc == '1'){ %>
+            <button class="m-0 p-0 h4 buttonDashboard button1">Patient Status</button>
+        <% } %>
+        <% if(data.typeAcc == '3'){ %>
+            <button class="m-0 p-0 h4 buttonDashboard button2" onclick="location.href='http://localhost:3000/consult-a-doctor'">Consult Doctors</button>
+        <% } %>
+        <button class="m-0 p-0 h4 buttonDashboard button2" onclick="location.href='http://localhost:3000/ask-for-help'">Ask Help</button>
 
     </div> 
     <div class="m-0 p-0 pt-3 text-center" style="height: 15vh;">
-        <button onclick="location.href='/logout'" class="m-0 p-0 h4" style="border: none; background-color:#0d6efd; width: 100%; height: 15vh; color: #efefef;">LogOut</button>
+        <button onclick="location.href='/logout'" class="m-0 p-0 h4" style="border: none; background-color:#ff3b3f; width: 100%; height: 15vh; color: #efefef;">LogOut</button>
     </div>
 </div>

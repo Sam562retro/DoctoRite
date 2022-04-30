@@ -1,10 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const schema = require('./users');
+const otherSchema = require('./otherSchema');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 var session;
+
+const dateToTime = (dataD) => {
+    let data= new Date(dataD)
+    let hrs = data.getHours()
+    let mins = data.getMinutes()
+    if(hrs<=9){
+        hrs = '0' + hrs;
+    }
+    if(mins<10){
+        mins = '0' + mins;
+    }
+    const postTime= hrs + ':' + mins
+    return postTime
+}
 
 router.get('/', (req, res) => {
     session=req.session;
@@ -131,7 +146,15 @@ router.get('/doctor', (req, res) => {
     session=req.session;
     if(session.userid){
         if(session.type == '1'){
-            res.render('doctorHome');
+            schema.doc.findById(session.userid).then(data => {
+                otherSchema.help.find().then(helpThem => {
+                    res.render('dashboardMain', {data : data, helpThem : helpThem});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }).catch(err => {
+                res.send(err);
+            })
         }else{
             res.redirect('/');
         }
@@ -139,15 +162,19 @@ router.get('/doctor', (req, res) => {
         res.redirect('/');
     }
 })
-router.get('/doctor/askHelp', (req, res) => {})
-router.post('/doctor/askHelp', (req, res) => {})
-
-
 router.get('/patient', (req, res) => {
     session=req.session;
     if(session.userid){
         if(session.type == '3'){
-            res.render('patientHome');
+            schema.pat.findById(session.userid).then(data => {
+                otherSchema.help.find().then(helpThem => {
+                    res.render('dashboardMain', {data : data, helpThem : helpThem});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }).catch(err => {
+                res.send(err);
+            })
         }else{
             res.redirect('/');
         }
@@ -155,19 +182,19 @@ router.get('/patient', (req, res) => {
         res.redirect('/');
     }
 })
-router.get('/patient/appointment', (req, res) => {})
-router.post('/patient/appointment', (req, res) => {})
-router.get('/patient/ask-doctors', (req, res) => {})
-router.post('/patient/ask-doctors', (req, res) => {})
-router.get('/patient/ask-for-rooms', (req, res) => {})
-router.post('/patient/ask-for-room', (req, res) => {})
-
-
 router.get('/family', (req, res) => {
     session=req.session;
     if(session.userid){
         if(session.type == '2'){
-            res.render('familyHome');
+            schema.fam.findById(session.userid).then(data => {
+                otherSchema.help.find().then(helpThem => {
+                    res.render('dashboardMain', {data : data, helpThem : helpThem});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }).catch(err => {
+                res.send(err);
+            })
         }else{
             res.redirect('/');
         }
@@ -177,9 +204,144 @@ router.get('/family', (req, res) => {
 })
 
 
-router.get('/help-a-doctor', (req, res) => {})
-router.get('/update-health', (req, res) => {})
-router.post('/update-health', (req, res) => {})
-
+router.get('/help-a-person/:id', (req, res) => {
+    otherSchema.help.findById(req.params.id).then(helpData => {
+        session=req.session;
+            if(session.userid){
+                if(session.type == '1'){
+                    schema.doc.findById(session.userid).then(data => {
+                        res.render('help-show', {data : data, helpData:helpData});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '2'){
+                    schema.fam.findById(session.userid).then(data => {
+                        res.render('help-show', {data : data, helpData:helpData});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '3'){
+                    schema.pat.findById(session.userid).then(data => {
+                        res.render('help-show', {data : data, helpData:helpData});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else{
+                    res.redirect('/');
+                }
+            }else{
+                res.redirect('/');
+            }
+    }).catch(err => {res.send(err);})
+})
+router.post('/help-a-person/:id', (req, res) => {
+    otherSchema.help.findByIdAndDelete(req.params.id).catch(err => {res.send(err)});
+    res.redirect('/')
+})
+router.get('/ask-for-help', (req, res) => {
+    otherSchema.help.find().then(data => {
+        if(data.length < 9){
+            session=req.session;
+            if(session.userid){
+                if(session.type == '1'){
+                    schema.doc.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: true});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '2'){
+                    schema.fam.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: true});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '3'){
+                    schema.pat.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: true});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else{
+                    res.redirect('/');
+                }
+            }else{
+                res.redirect('/');
+            }
+        }else{
+            session=req.session;
+            if(session.userid){
+                if(session.type == '1'){
+                    schema.doc.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: false});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '2'){
+                    schema.fam.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: false});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else if(session.type == '3'){
+                    schema.pat.findById(session.userid).then(data => {
+                        res.render('ask-help', {data : data, canAsk: false});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }else{
+                    res.redirect('/');
+                }
+            }else{
+                res.redirect('/');
+            }
+        }
+    })
+})
+router.post('/ask-for-help', (req, res) => {
+    const addData = new otherSchema.help({
+        typeAcc : req.body.userType,
+        name : req.body.name,
+        email : req.body.email,
+        PhoneNo : req.body.phoneNo,
+        userId : req.body.userId,
+        need : req.body.need,
+        explanation : req.body.explanation
+    }).save().catch(err => {
+        res.send(err);
+    }).then(data => {
+        res.redirect(`/`);
+    })
+})
+router.get('/consult-a-doctor', (req, res) => {
+    session=req.session;
+    if(session.userid){
+        if(session.type == '3'){
+            schema.pat.findById(session.userid).then(data => {
+                schema.doc.find().then(dataDoc => {
+                    let dataDocArr = []
+                    dataDoc.forEach(function(docData){
+                        obj = docData;
+                        obj._id = undefined;
+                        obj.password = undefined;
+                        obj.typeAcc = undefined;
+                        obj.covidStatus = undefined;
+                        obj.address = undefined;
+                        obj.health = undefined;
+                        obj.freeTimeStart = undefined;
+                        obj.freeTimeEnd = undefined;
+                        dataDocArr.push(obj)
+                    })
+                    res.render('consult-docs', {data : data, dataDocs: dataDocArr});
+                }).catch(err => {res.send(err)})
+            }).catch(err => {
+                res.send(err);
+            })
+        }else{
+            res.redirect('/');
+        }
+    }else{
+        res.redirect('/');
+    }
+})
 
 module.exports = router;

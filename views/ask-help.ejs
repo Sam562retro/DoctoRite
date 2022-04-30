@@ -1,0 +1,25 @@
+<%- include('partials/_dashboardHead.ejs') %>
+    <% if(!(canAsk)) { %>
+        <p class="h4" style="color: #a9a9a9">Sorry, but it seems that all slots for asking for help are full. Please wait till one of those people have got their help.</p>
+    <% } else { %>
+        <p class="h2" style="color: #ff3b3f">Ask For Help!</p>
+        <p class="h6" style="color: #a9a9a9">Don't feel shy or scared, people are there to help you.</p>
+        <form method="POST">
+            <input type="hidden" name="userType" value="<%= data.typeAcc %>">
+            <input type="hidden" name="userId" value="<%= data._id %>">
+            <input type="hidden" name="name" value="<%= data.name %>">
+            <input type="hidden" name="email" value="<%= data.email %>">
+            <input type="hidden" name="phoneNo" value="<%= data.PhoneNo %>">
+            <div class="mb-3">
+                <label for="InputNeed" class="form-label">Enter your need</label>
+                <input type="text" class="form-control" id="InputNeed" aria-describedby="needHelp" name="need" placeholder="Like Room near address abc-123, xyz, city/Oxygen Concentrator/PPE Kit etc." required>
+            </div>
+            <div class="mb-3">
+                <label for="InputExplain" class="form-label">Enter an explanation due to which you need help.</label>
+                <pre><textarea class="form-control" id="InputExplain" name="explanation" rows="6" required></textarea></pre>
+            </div>
+            <p class="h6" style="color: #a9a9a9">We will add your registered email id and phone number so that the people who want to help can contact you.</p>
+            <button type="submit" class="btn btn-primary">Ask Help</button>
+        </form>
+    <% } %>
+<%- include('partials/_dashboardFoot.ejs') %>

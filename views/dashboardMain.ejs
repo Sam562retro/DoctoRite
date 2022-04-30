@@ -1,0 +1,26 @@
+<%- include('partials/_dashboardHead.ejs') %>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-8 ">
+                <p class="h2">Help A Person</p>
+                <div>
+                    <% if(helpThem.length == 0){ %>
+                        <p class="h5" style="color: #a9a9a9">No one needs help right now, check again after some time.  </p>
+                    <% }else{ %>
+                        <div class="row row-cols-3 row-cols-md-3 g-9"></div>
+                            <% helpThem.forEach(function(helpNeed){ %>
+                                <div class="card" style="width:30%;">
+                                    <div class="card-body">
+                                    Our user, <b><%= helpNeed.name %></b> needs <b><%= helpNeed.need %></b>.<br>
+                                    <a href="http://localhost:3000/help-a-person/<%= helpNeed._id %>">Know More</a> 
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    <% } %> 
+            </div>
+
+        </div>
+<%- include('partials/_dashboardFoot.ejs') %>

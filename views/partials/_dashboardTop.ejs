@@ -1,19 +1,36 @@
-<div class="m-0 p-1" style="background-color: #343a40; height: 25vh;">
+<div class="m-0 p-1" style="background-color: #a9a9a9; height: 25vh;">
     <div class="dashboard" style="margin-left: 5vw;">
         <p style="color: #caebf2; " class="h3">Your Status:</p>
     <div class="row">
         <div class="col-md-2 text-center">
-            <p class="h5" style="color: #efefef;">You are free between 3:30 <span class="h6">to</span> 5:30</p> 
+            <% if(data.typeAcc == '1'){ %>
+                <%
+                const handleTime = (dataD) => {
+                    let data= new Date(dataD)
+                    let hrs = data.getHours()
+                    let mins = data.getMinutes()
+                    if(hrs<=9){
+                       hrs = '0' + hrs;
+                    }
+                    if(mins<10){
+                      mins = '0' + mins;
+                    }
+                    const postTime= hrs + ':' + mins
+                    return postTime
+                  }
+                  %>
+                <p class="h5" style="color: #efefef;">You are free between <%= handleTime(data.freeTimeStart) %> <span class="h6">to</span> <%= handleTime(data.freeTimeEnd) %> </p> 
+            <% } %>
         </div>
         <div class="col-md-3 text-center">
-            <p class="h4" style="color: #efefef">You are Covid Positive</p>
+            <p class="h4" style="color: #efefef">You are Covid <% if(data.covidStatus){ %> positive <% }else{ %> negative <% } %></p>
         </div>
         <div class="col-md-7">
             <p class="h5" style="color: #efefef">Your Health Status:</p>
-            <textarea cols="65" rows="2" disabled>I am feeling great !</textarea>
+            <textarea cols="65" rows="2" disabled><%= data.health %></textarea>
         </div>
     </div>
     </div>
 
-    <p style="color: #caebf2; text-align: right; cursor: pointer;" onclick="location.href='#'">Edit</p>
+    <p style="color: #caebf2; text-align: right; cursor: pointer;" onclick="location.href='#'">Edit Your Details</p>
 </div>

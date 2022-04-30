@@ -1,0 +1,33 @@
+<%- include('partials/_dashboardHead.ejs') %>
+    <div class="row">
+        <p class="h2" style="color: #ff3b3f">Consult A Doctor</p>
+        <p class="h3" style="color: #a9a9a9">Choose the doctor you want to consult: </p>
+        <div class="row text-center">
+            <div class="col-md-5">
+                <p class="h5" style="color: #a9a9a9">Name</p>
+            </div>
+            <div class="col-md-4">
+                <p class="h5" style="color: #a9a9a9">Email</p>
+            </div>
+            <div class="col-md-3">
+                <p class="h5" style="color: #a9a9a9">Phone number</p>
+            </div>
+            <br>
+        </div>
+        <% dataDocs.forEach(function(detail){%>
+            <div class="row text-center">
+                <div class="col-md-5">
+                    <p class="h5" style="color: #a9a9a9"><%= detail.name %></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="h5" style="color: #a9a9a9"><%= detail.email %></p>
+                </div>
+                <div class="col-md-3">
+                    <p class="h5" style="color: #a9a9a9"><%= detail.PhoneNo %></p>
+                </div>
+                <br>
+            </div>
+        <%}) %>
+    </div>
+    </div>
+<%- include('partials/_dashboardFoot.ejs') %>

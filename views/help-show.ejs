@@ -1,0 +1,12 @@
+<%- include('partials/_dashboardHead.ejs') %>
+    <p class="h2" style="color: #ff3b3f">Help <%= helpData.name %></p>
+    <p class="h4" style="color: #a9a9a9"><%= helpData.name %> needs <%= helpData.need %></p>
+    <p class="h3" style="color: #a9a9a9">Explanation:</p>
+    <pre><textarea class="form-control" rows="7" disabled><%= helpData.explanation %></textarea></pre>
+    <p class="h4" style="color: #ff3b3f">To help, contact <%= helpData.name %> using, </p>
+    <p class="h5" style="color: #a9a9a9">Email: <%= helpData.email %> or Mobile: <%= helpData.PhoneNo %></p>
+    <form method="POST">
+        <button type="submit" class="btn btn-primary form-control">Clear Help</button>
+    </form>
+    <p class="h6 text-center" style="color: #a9a9a9;">Note: only do so if you have contacted and helped the person</p>
+<%- include('partials/_dashboardFoot.ejs') %>
