@@ -9,20 +9,6 @@ const { doc } = require('./users');
 
 var session;
 
-const dateToTime = (dataD) => {
-    let data= new Date(dataD)
-    let hrs = data.getHours()
-    let mins = data.getMinutes()
-    if(hrs<=9){
-        hrs = '0' + hrs;
-    }
-    if(mins<10){
-        mins = '0' + mins;
-    }
-    const postTime= hrs + ':' + mins
-    return postTime
-}
-
 router.get('/', (req, res) => {
     session=req.session;
     if(session.userid){
@@ -34,7 +20,7 @@ router.get('/', (req, res) => {
             res.redirect('/patient');
         }
     }else{
-        res.render('home');
+        res.render('index');
     }
 })
 router.get('/login', (req, res) => {

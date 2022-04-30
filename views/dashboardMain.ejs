@@ -5,10 +5,12 @@
                     <button onclick="location.href='http://localhost:3000/consult-a-doctor'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Consult A Doctor</b></button>
                 <%}%>
                 <% if(data.typeAcc == '1'){%>
-                    <button onclick="location.href='http://localhost:3000/chat/doctors'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Doctors Chat Room</b></button>
+                    <button onclick="location.href='http://localhost:3000/chat/doctors?username=<%= data.name %>&room=Doctors'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Doctors Chat Room</b></button>
                 <%}%>
-                <% if(data.typeAcc == '2' || data.typeAcc == '1'){%>
-                    <button onclick="location.href='http://localhost:3000/chat/family-doc'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Family Chat Room</b></button>
+                <% if(data.typeAcc == '2'){%>
+                    <button onclick="location.href='http://localhost:3000/chat/family-doc?username=<%= data.name %>&room=<%= data.relatedDoc %>'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Family Chat Room</b></button>
+                <%}else if(data.typeAcc == '1'){%>
+                    <button onclick="location.href='http://localhost:3000/chat/family-doc?username=<%= data.name %>&room=<%= data._id %>'" style="height: 100%;" class="mb-2 btn btn-success form-control"><b>Family Chat Room</b></button>
                 <%}%>
             </div>
             <div class="col-md-8 ">
