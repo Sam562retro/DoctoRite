@@ -1,0 +1,41 @@
+<%- include('partials/_dashboardHead.ejs') %>
+
+    <% if(data.typeAcc == '2'){%>
+        <div class="card" style="width:100%;">
+            <div class="card-body">
+            Your family doctor, <b><%= familyDoc[0].name %></b> is Covid-19 <% if(familyDoc[0].covidStatus){ %><span style="color: #ff3b3f; ">Positive</span><%}else{%>Negative<%}%><br>
+            <a href="http://localhost:3000/profile/<%= familyDoc[0].typeAcc %>/<%= familyDoc[0]._id %>">Look at complete profile</a> 
+            </div>
+        </div>
+    <%}%>
+    <p class="h2" style="color: #ff3b3f">Your family member's status: </p>
+    <% if(family.length == 1){ %>
+        <p class="h5" style="color: #a9a9a9">There is none related to you who has joined our platform. </p>
+    <% }else{ %>
+        <div class="row row-cols-1 row-cols-md-3 g-12"></div>
+            <%console.log(data.typeAcc)%>
+            <% if(data.typeAcc != '1'){%>
+            <div class="col">
+                <div class="card" style="width:30%;">
+                    <div class="card-body">
+                    Your relative, <b><%= familyDoc.name %></b> is Covid-19 <% if(familyDoc.covidStatus){ %><span style="color: #ff3b3f; ">Positive</span><%}else{%>Negative<%}%><br>
+                    <a href="http://localhost:3000/profile/<%= familyDoc.typeAcc %>/<%= familyDoc._id %>">Look at complete profile</a> 
+                    </div>
+                </div>
+            </div>
+            <%}%>
+            <% family.forEach(function(fam){ %>
+                <% if(!(data.name == fam.name)){%>
+                <div class="col">
+                    <div class="card" style="width:30%;">
+                        <div class="card-body">
+                        Your relative, <b><%= fam.name %></b> is Covid-19 <% if(fam.covidStatus){ %><span style="color: #ff3b3f; ">Positive</span><%}else{%>Negative<%}%><br>
+                        <a href="http://localhost:3000/profile/<%= fam.typeAcc %>/<%= fam._id %>">Look at complete profile</a> 
+                        </div>
+                    </div>
+                </div>
+                <%}%>
+            <% }) %>
+        </div>
+    <% } %> 
+<%- include('partials/_dashboardFoot.ejs') %>

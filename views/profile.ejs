@@ -2,7 +2,11 @@
 <div class="row" style="overflow : hidden;">
     <div class="col-md-4 p-5 text-center" style="height: 100vh; background-color: #caebf2">
         <button onclick="location.href='http://localhost:3000/'" class="btn btn-warning m-0" style="float: left !important; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">Back To Dashboard</button>
+        <% if(yourAcc){%>
         <button onclick="location.href='http://localhost:3000/edit-profile'" class="btn btn-success" style="float: left !important; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">Edit</button><br><br><br>
+        <%}else{%>
+        <br><br><br>
+        <%}%>
         <p class="h3" style="color: black;">Health Status</p>
         <br>
         <br>

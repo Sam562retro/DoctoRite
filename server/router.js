@@ -5,6 +5,7 @@ const otherSchema = require('./otherSchema');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 const { send } = require('express/lib/response');
+const { doc } = require('./users');
 
 var session;
 
@@ -204,6 +205,40 @@ router.get('/family', (req, res) => {
     }
 })
 
+router.get('/family-status', (req, res) => {
+    session=req.session;
+    if(session.userid){
+        if(session.type == '1'){
+            schema.doc.findById(session.userid).then(data => {
+                schema.fam.find({relatedDoc : data._id}).then(family => {
+                    res.render('family-stat', {data : data, family : family});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }).catch(err => {
+                res.send(err);
+            })
+        }else if(session.type == '2'){
+            schema.fam.findById(session.userid).then(data => {
+                schema.fam.find({relatedDoc : data.relatedDoc}).then(family => {
+                    schema.doc.find({_id : data.relatedDoc}).then(familyDoc => { 
+                        res.render('family-stat', {data : data, family : family, familyDoc: familyDoc});
+                    }).catch(err => {
+                        res.send(err);
+                    })
+                }).catch(err => {
+                    res.send(err);
+                })
+            }).catch(err => {
+                res.send(err);
+            })
+        }else{
+            res.redirect('/');
+        }
+    }else{
+        res.redirect('/');
+    }
+})
 
 router.get('/help-a-person/:id', (req, res) => {
     otherSchema.help.findById(req.params.id).then(helpData => {
