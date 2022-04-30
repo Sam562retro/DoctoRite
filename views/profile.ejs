@@ -1,0 +1,60 @@
+<%- include('partials/_header.ejs') %>
+<div class="row" style="overflow : hidden;">
+    <div class="col-md-4 p-5 text-center" style="height: 100vh; background-color: #caebf2">
+        <button onclick="location.href='http://localhost:3000/'" class="btn btn-warning m-0" style="float: left !important; border-top-right-radius: 0px; border-bottom-right-radius: 0px;">Back To Dashboard</button>
+        <button onclick="location.href='http://localhost:3000/edit-profile'" class="btn btn-success" style="float: left !important; border-top-left-radius: 0px; border-bottom-left-radius: 0px;">Edit</button><br><br><br>
+        <p class="h3" style="color: black;">Health Status</p>
+        <br>
+        <br>
+        <p class="h4" style="color: #a9a9a9;"><%= data.name %> <br>is Covid-19 <% if(data.covidStatus){ %><span style="color: #ff3b3f">Positive</span><%}else{%>Negative<%}%></p>
+        <br>
+        <br>
+        <p class="h4" style="color:#ff3b3f">Health Status</p>
+        <p class="h6" style="color: #a9a9a9;">As described by <%= data.name %></p>
+        <textarea class="form-control" rows="8" disabled><%= data.health %></textarea>
+    </div>
+    <div class="col-md-8 p-5" style="height: 100vh; background-color: #efefef">
+        <div style="height: 75vh;">
+            <p class="h2" style="color: #ff3b3f"><%= data.name %>'s Profile</p>
+            <p class="h5" style="color: #a9a9a9;">A <%if(data.typeAcc == '1'){%>Doctor<%}else if(data.typeAcc == '2'){%>Family<%}else{%>Patient<%}%> account owner</p>
+            <% if(data.typeAcc == '1'){ %>
+                <%
+                const handleTime = (dataD) => {
+                    let data= new Date(dataD)
+                    let hrs = data.getHours()
+                    let mins = data.getMinutes()
+                    if(hrs > 12){
+                        hrs = hrs-12;
+                    }
+                    if(hrs<=9){
+                       hrs = '0' + hrs;
+                    }
+                    if(mins<10){
+                      mins = '0' + mins;
+                    }
+                    const postTime= hrs + ':' + mins
+                    return postTime
+                  }
+                  %>
+                <br>
+                <p class="h5" style="color: #a9a9a9;"><%= data.name %> is free from <%= handleTime(data.freeTimeStart) %> to <%= handleTime(data.freeTimeEnd) %></p>
+            <%}%>
+            <br>
+            <p class="h5" style="color: #a9a9a9">Address:<br><%= data.address %></p>
+        </div>
+        <div style="height: 25vh;">
+            <p class="h3" style="color: #a9a9a9;">Contact Information</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="h5" style="color: #a9a9a9">Email: <%= data.email %></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="h5" style="color: #a9a9a9">Mobile: <%= data.PhoneNo %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('partials/_footer.ejs') %>
+
+

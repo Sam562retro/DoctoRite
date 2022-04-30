@@ -15,7 +15,7 @@
             <br>
         </div>
         <% dataDocs.forEach(function(detail){%>
-            <div class="row text-center">
+            <div class="row text-center" style="cursor: pointer;" onclick="location.href='http://localhost:3000/profile/1/<%= detail._id %>'">
                 <div class="col-md-5">
                     <p class="h5" style="color: #a9a9a9"><%= detail.name %></p>
                 </div>

@@ -4,6 +4,7 @@ const schema = require('./users');
 const otherSchema = require('./otherSchema');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
+const { send } = require('express/lib/response');
 
 var session;
 
@@ -321,7 +322,6 @@ router.get('/consult-a-doctor', (req, res) => {
                     let dataDocArr = []
                     dataDoc.forEach(function(docData){
                         obj = docData;
-                        obj._id = undefined;
                         obj.password = undefined;
                         obj.typeAcc = undefined;
                         obj.covidStatus = undefined;
@@ -341,6 +341,97 @@ router.get('/consult-a-doctor', (req, res) => {
         }
     }else{
         res.redirect('/');
+    }
+})
+router.get('/profile/:typeAccount/:id', (req, res) => {
+        session=req.session;
+        if(session.userid){
+            if(req.params.typeAccount == '1'){
+                schema.doc.findById(req.params.id).then(data => {
+                    let x = false;
+                    if(data._id == session.userid){
+                        x = true;
+                    }
+                    res.render('profile', {data : data, yourAcc : x});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }else if(req.params.typeAccount == '2'){
+                schema.fam.findById(req.params.id).then(data => {
+                    let x = false;
+                    if(data._id == session.userid){
+                        x = true;
+                    }
+                    res.render('profile', {data : data, yourAcc : x});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }else if(req.params.typeAccount == '3'){
+                schema.pat.findById(req.params.id).then(data => {
+                    let x = false;
+                    if(data._id == session.userid){
+                        x = true;
+                    }
+                    res.render('profile', {data : data, yourAcc : x});
+                }).catch(err => {
+                    res.send(err);
+                })
+            }else{
+                res.redirect('/');
+            }
+        }else{
+            res.redirect('/');
+        }
+})
+router.get('/edit-profile', (req, res) => {
+    session=req.session;
+    if(session.userid){
+        if(session.type == '1'){
+            schema.doc.findById(session.userid).then(data => {
+                res.render('edit-profile', {data : data});
+            }).catch(err => {
+                res.send(err);
+            })
+        }else if(session.type == '2'){
+            schema.fam.findById(session.userid).then(data => {
+                res.render('edit-profile', {data : data});
+            }).catch(err => {
+                res.send(err);
+            })
+        }else if(session.type == '3'){
+            schema.pat.findById(session.userid).then(data => {
+                res.render('edit-profile', {data : data});
+            }).catch(err => {
+                res.send(err);
+            })
+        }else{
+            res.redirect('/');
+        }
+    }else{
+        res.redirect('/')
+    }
+})
+router.post('/edit-profile', (req, res) => {
+    dat = req.body;
+    session = req.session;
+    if(session.type == '1'){
+        console.log(dat);
+        dat.freeTimeStart = new Date().setHours(dat.freeTimeStart.slice(0,2), dat.freeTimeStart.slice(3));
+        dat.freeTimeEnd = new Date().setHours(dat.freeTimeEnd.slice(0,2), dat.freeTimeEnd.slice(3));
+        console.log(dat.freeTimeStart);
+        schema.doc.findOneAndUpdate({_id : session.userid}, dat).then(data => {
+            res.redirect('/')
+        }).catch(err => res.send(err))
+    }else if(session.type == '2'){
+        schema.fam.findOneAndUpdate({_id : session.userid}, dat).then(data => {
+            res.redirect('/')
+        }).catch(err => res.send(err))
+    }else if(session.type == '3'){
+        schema.pat.findOneAndUpdate({_id : session.userid}, dat).then(data => {
+            res.redirect('/')
+        }).catch(err => res.send(err))
+    }else{
+        res.redirect('/')
     }
 })
 

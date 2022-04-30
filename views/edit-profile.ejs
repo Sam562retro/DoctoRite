@@ -1,0 +1,44 @@
+<%- include('partials/_header.ejs') %>
+<div class="p-5" style="overflow-x : hidden; background-color: #efefef; height: 100vh;">
+    <button onclick="location.href='http://localhost:3000/'" class="btn btn-warning m-0" style="float: left !important;">Back To Dashboard</button><br><br>
+    <div>
+        <br><br>
+        <p class="h2" style="color: #ff3b3f">Edit Your Profile: </p>
+        <form method="POST"><pre>
+            <p class="h4" style="color: #a9a9a9">Name: <input type="text" class="form-control" name="name" value="<%= data.name %>"></p>
+            <p class="h4" style="color: #a9a9a9">Email: <input type="text" class="form-control" name="email" value="<%= data.email %>"></p>
+            <p class="h4" style="color: #a9a9a9">Address: <input type="text" class="form-control" name="address" value="<%= data.address %>"></p>
+            <p class="h4" style="color: #a9a9a9">Phone Number: <input type="number" class="form-control" name="PhoneNo" value="<%= data.PhoneNo %>"></p>
+            <p class="h4" style="color: #a9a9a9">Health Status: <textarea type="text" class="form-control" name="health" ><%= data.health %></textarea></p>
+            <% if(data.covidStatus){%>
+            <p class="h4" style="color: #a9a9a9">Covid Status:<select class="form-control" name="covidStatus"><option value="true">Positive</option><option value="false">Negative</option></select></p>
+            <%}else{%>
+                <p class="h4" style="color: #a9a9a9">Covid Status:<select class="form-control" name="covidStatus"><option value="false">Negative</option><option value="true">Positive</option></select></p>
+            <%}%>
+            <% if(data.typeAcc == '1'){%>
+                <%
+                const handleTime = (dataD) => {
+                    let data= new Date(dataD)
+                    let hrs = data.getHours()
+                    let mins = data.getMinutes()
+                    if(hrs > 12){
+                        hrs = hrs-12;
+                    }
+                    if(hrs<=9){
+                       hrs = '0' + hrs;
+                    }
+                    if(mins<10){
+                      mins = '0' + mins;
+                    }
+                    const postTime= hrs + ':' + mins
+                    return postTime
+                  }
+                  %>
+                <p class="h4" style="color: #a9a9a9">Start Of Free Time: <input type="time" class="form-control" name="freeTimeStart" value="<%= handleTime(data.freeTimeStart) %>"></p>
+                <p class="h4" style="color: #a9a9a9">End Of Free Time: <input type="time" class="form-control" name="freeTimeEnd" value="<%= handleTime(data.freeTimeEnd) %>"></p>
+            <%}%>
+<input type="submit" class="form-control btn btn-success">
+        </pre></form>
+    </div>
+</div>
+<%- include('partials/_footer.ejs') %>

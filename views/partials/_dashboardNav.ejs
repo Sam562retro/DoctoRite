@@ -34,13 +34,10 @@
         <% if(data.typeAcc == '1' || data.typeAcc == '2'){ %>
             <button class="m-0 p-0 h4 buttonDashboard button2">Family Status</button>
         <% } %>
-        <% if(data.typeAcc == '1'){ %>
-            <button class="m-0 p-0 h4 buttonDashboard button1">Patient Status</button>
-        <% } %>
         <% if(data.typeAcc == '3'){ %>
             <button class="m-0 p-0 h4 buttonDashboard button2" onclick="location.href='http://localhost:3000/consult-a-doctor'">Consult Doctors</button>
         <% } %>
-        <button class="m-0 p-0 h4 buttonDashboard button2" onclick="location.href='http://localhost:3000/ask-for-help'">Ask Help</button>
+        <button class="m-0 p-0 h4 buttonDashboard button1" onclick="location.href='http://localhost:3000/ask-for-help'">Ask Help</button>
 
     </div> 
     <div class="m-0 p-0 pt-3 text-center" style="height: 15vh;">
