@@ -16,7 +16,7 @@ const {userJoin, getCurrentUser, userLeave, getRoomUsers, giveAllRooms, createRo
 
 
 const connection = () => {
-    mongoose.connect('mongodb://localhost/DoctorsHelp', {
+    mongoose.connect('mongodb://127.0.0.1/DoctorsHelp', {
         useNewUrlParser: true,
         useUnifiedTopology: true
     });
