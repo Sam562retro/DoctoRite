@@ -13,3 +13,7 @@ Download all the files,
 	then use npm install command
 	then use npm test
 	then go to http://localhost:3000 on your browser
+
+Contacts: 
+Email - gsoham562@gmail.com
+Name- Soham Gupta
